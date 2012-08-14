@@ -1,0 +1,46 @@
+<div id="table-wrapper">
+<div class="filter tools pull-right">
+Фильтр <input ng-model="filter" class="search-query">
+</div>
+<div class="tools pull-left">
+	<a href="#/new" class="btn btn-success">Создать новую запись</a>
+</div>
+<div class="tools pull-left" ng-show="selected.length==1">
+	<button ng-click="deleteItem(1)" class="btn btn-danger">Удалить выделенную запись</button>
+</div>
+<div class="tools pull-left" ng-show="selected.length>1">
+	<button ng-click="deleteItem()" class="btn btn-danger">Удалить выделенные записи ({{selected.length}})</button>
+</div>
+<table class="table table-striped">
+<thead>
+	<tr ng-mousedown="$event.preventDefault()" onselectstart="return false">
+		<th ng-repeat="head in tablehead" ng-click="sortReorder(head.name,$event)" ng-class="{'sort-asc':head.sort>0,'sort-desc':head.sort<0}">{{head.title}}</th>
+	</tr>
+</thead>
+<tbody>
+	<tr ng-repeat="item in items | filterEx:tablehead:filter | orderBy:sortBy() | showPage:paginator"
+			ng-click="selectItem($event)" ng-class="item.selected && 'selected'">
+		<td><a href="#/edit/{{item.id}}">{{item.title}}</a></td>
+		<td>{{item.category|list:categories}}</td>
+		<td>{{item.answerer|list:answerers}}</td>
+		<td>{{item.author}}</td>
+		<td>{{item.created}}</td>
+		<td>{{item.answered}}</td>
+		<td><span class="disable-item" style="color:{{item.shown>0&&'green'||'red'}};" ng-click="disableItem()">{{item.shown>0&&'вкл'||'выкл'}}</span></td>
+	</tr>
+</tbody>
+</table>
+<div id="table-tools">
+	<div class="pull-left">
+	Показано {{Math.min(paginator.count,items.length)}} записей из {{items.length}}
+	</div>
+	<div class="controls input-append pull-right">
+		<input type="button" ng-click="paginator.page=1" class="btn btn-small" value="&lt;&lt;">
+		<input type="button" ng-click="paginator.page=paginator.page-1 || 1" class="btn btn-small" value="&lt;">
+		<input ng-model="paginator.page" class="paginator-page"><span class="add-on">из {{paginator.pages}} стр.</span>
+		<input type="button" ng-click="paginator.page=Math.min(paginator.page+1,paginator.pages)" class="btn btn-small" value="&gt;">
+		<input type="button" ng-click="paginator.page=paginator.pages" class="btn btn-small" value="&gt;&gt;">
+	</div>
+	<div class="clear"></div>
+</div>
+</div>

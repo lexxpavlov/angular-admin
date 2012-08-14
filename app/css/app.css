@@ -1,0 +1,53 @@
+/* app css stylesheet */
+
+.menu {
+  list-style: none;
+  border-bottom: 0.1em solid black;
+  margin-bottom: 2em;
+  padding: 0 0 0.5em;
+}
+
+.menu:before {
+  content: "[";
+}
+
+.menu:after {
+  content: "]";
+}
+
+.menu > li {
+  display: inline;
+}
+
+.menu > li:before {
+  content: "|";
+  padding-right: 0.3em;
+}
+
+.menu > li:nth-child(1):before {
+  content: "";
+  padding: 0;
+}
+
+#table-wrapper .tools {padding: 10px;}
+#table-wrapper .disable-item,
+#table-wrapper thead th {cursor: pointer;}
+#table-tools {padding: 0 10px;}
+#table-tools input {margin-bottom: 0;}
+#table-tools .clear {clear: both;}
+#table-tools .paginator-page {text-align: right; width: 60px;}
+#table-wrapper thead th {
+	padding-left: 20px;
+	background-image: url(/pic/sort-def.gif);
+	background-repeat: no-repeat;
+	background-position: center left;
+}
+#table-wrapper thead th.sort-asc {background-image: url(/pic/sort-asc.gif);}
+#table-wrapper thead th.sort-desc {background-image: url(/pic/sort-desc.gif);}
+
+#table-wrapper .table tbody tr.selected:hover td,
+#table-wrapper .table tbody tr.selected:hover th {background: #e4f7ec;}
+.table-striped tbody tr.selected:nth-child(odd) td,
+.table-striped tbody tr.selected:nth-child(odd) th {background: #ebfaf2;}
+.table-striped tbody tr.selected:nth-child(even) td,
+.table-striped tbody tr.selected:nth-child(even) th {background: #f4fcf8;}

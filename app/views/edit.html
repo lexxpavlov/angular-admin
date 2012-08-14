@@ -1,0 +1,51 @@
+<form name="saveForm" class="form-horizontal">
+	<fieldset>
+		<div class="control-group">
+			<div class="controls">
+				<h3>{{["Добавление","Изменение"][(item.id>0)+0]}} записи</h3>
+			</div>
+		</div>
+		<div class="control-group" ng-class="{error: saveForm.category.$invalid}">
+			<label class="control-label" for="category">Категория</label>
+			<div class="controls">
+				<select name="category" ng-model="item.category" required
+					ng-options="key as value for (key, value) in categories"></select>
+			</div>
+		</div>
+		<div class="control-group" ng-class="{error: saveForm.title.$invalid}">
+			<label class="control-label" for="title">Заголовок</label>
+			<div class="controls">
+				<input name="title" ng-model="item.title" required>
+			</div>
+		</div>
+		<div class="control-group" ng-class="{error: saveForm.author.$invalid}">
+			<label class="control-label" for="author">Автор</label>
+			<div class="controls">
+				<input name="author" ng-model="item.author" required>
+			</div>
+		</div>
+		<div class="control-group" ng-class="{error: saveForm.answerer.$invalid}">
+			<label class="control-label" for="answerer">Кому задан</label>
+			<div class="controls">
+				<select name="answerer" ng-model="item.answerer" required
+					ng-options="key as value for (key, value) in answerers"></select>
+			</div>
+		</div>
+		<div class="control-group" ng-class="{error: saveForm.answerer.$invalid}">
+			<label class="control-label" for="text">Текст</label>
+			<div class="controls">
+				<textarea id="text" ng-model="item.text" required=""></textarea>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="answer">Ответ</label>
+			<div class="controls">
+				<textarea id="answer" ng-model="item.answer"></textarea>
+			</div>
+		</div>
+		<div class="form-actions">
+			<input type="button" ng-disabled="saveForm.$invalid||saveForm.$pristine" href="#/list" ng-click="save()" class="btn btn-success" value="Сохранить">
+			<a href="#/list" class="btn">Отмена</a>
+		</div>
+	</fieldset>
+</form>
