@@ -18,7 +18,7 @@
 	</tr>
 </thead>
 <tbody>
-	<tr ng-repeat="item in items | filterEx:tablehead:filter | orderBy:sortBy() | showPage:paginator"
+	<tr ng-repeat="item in items | filterEx:tablehead:filter | orderByEx:tablehead:sortBy() | showPage:paginator"
 			ng-click="selectItem($event)" ng-class="item.selected && 'selected'">
 		<td><a href="#/edit/{{item.id}}">{{item.title}}</a></td>
 		<td>{{item.category|list:categories}}</td>
