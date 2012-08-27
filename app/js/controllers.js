@@ -11,10 +11,12 @@ function ListCtrl($scope, Items, Data) {
 	$scope.answerers  = Data('answerers');
 
 	$scope.selected  = [];
-	$scope.paginator = {count: 5, page: 1, pages: 1};
-	$scope.paginator.setPages = function(itemsCount){
-		this.pages = Math.ceil(itemsCount/this.count);
-	}.bind($scope.paginator);
+	$scope.paginator = {
+		count: 3,
+		page:  1,
+		pages: 1,
+		setPages: function(itemsCount){ this.pages = Math.ceil(itemsCount/this.count); }
+	};
 
 	$scope.tablehead = [
 		{name:'title',    title:"Заголовок",  sort:-2},
@@ -49,6 +51,7 @@ function ListCtrl($scope, Items, Data) {
 			});
 		}
 	};
+
 	$scope.disableItem = function() {
 		var item = this.item;
 		Items.toggle({id:item.id}, function(data) { if (data.ok) item.shown = item.shown>0?0:1; });
@@ -77,13 +80,15 @@ function ListCtrl($scope, Items, Data) {
 			       if (v==_id) { $scope.selected.splice(k,1); return false; }
 			     });
 	};
-	$scope.$watch('items',function() {
-		$scope.paginator.setPages($scope.items.length);
+	$scope.$watch('items',function(newValue, oldValue) {
+		if (newValue!==oldValue) $scope.paginator.setPages($scope.items.length);
 	});
-	$scope.$watch('paginator.page',function() {
-		if ($scope.paginator.page<1) $scope.paginator.page = 1;
-		if ($scope.paginator.page>$scope.paginator.pages)
-			$scope.paginator.page = $scope.paginator.pages;
+	$scope.$watch('paginator.page',function(page,old) {
+		var newPage = page;
+		if (page<1) newPage = 1;
+		if (page>$scope.paginator.pages) newPage = old;
+		if (typeof(newPage)=='string') newPage = +newPage.replace(/[^0-9]/,'');
+		if (page!==newPage) $scope.paginator.page = newPage;
 		angular.forEach($scope.items, function(v,k) { $scope.items[k].selected = false; });
 	});
 }

@@ -24,15 +24,16 @@ angular.module('admin.filters', [])
 		};
 	})
 	.filter('showPage', function() {
-		return function(list, sort) {
-			if (sort.page<1) sort.page = 1;
-			if (sort.count<1) sort.count = 1;
-			if (sort.pages && sort.page>sort.pages) sort.page = sort.pages;
-			return list.slice(sort.count*(sort.page-1), sort.count*sort.page);
+		return function(list, paginator) {
+			if (paginator.page<1) paginator.page = 1;
+			if (paginator.count<1) paginator.count = 1;
+			if (paginator.pages && paginator.page>paginator.pages) paginator.page = paginator.pages;
+			return list.slice(paginator.count*(paginator.page-1), paginator.count*paginator.page);
 		};
 	})
 	.filter('orderByEx',orderByExFilter);
-function orderByExFilter($parse){
+
+function orderByExFilter($parse){ // modified version of native Angular orderBy filter
   return function(array, tablehead, sortPredicate, reverseOrder) {
     if (!(array instanceof Array)) return array;
     if (!sortPredicate) return array;
@@ -46,13 +47,13 @@ function orderByExFilter($parse){
         }
         get = $parse(predicate);
       }
-			// if list of values specified
+      // if list of values specified
       if (list = find(tablehead,predicate)) {
-        return reverseComparator(function(a,b){
+        return reverseComparator(function(a,b){ // return list-based comparator
           return compare(list[get(a)],list[get(b)]);
         }, descending);
       }
-      return reverseComparator(function(a,b){
+      return reverseComparator(function(a,b){ // else use native comparator
         return compare(get(a),get(b));
       }, descending);
     });
@@ -84,7 +85,7 @@ function orderByExFilter($parse){
         return t1 < t2 ? -1 : 1;
       }
     }
-    function map (obj, iterator, context) {
+    function map (obj, iterator, context) { // copy of native Angular map function
       var results = [];
       angular.forEach(obj, function(value, index, list) {
         results.push(iterator.call(context, value, index, list));
@@ -95,6 +96,7 @@ function orderByExFilter($parse){
 }
 orderByExFilter.$inject = ['$parse'];
 
+// used in extended filters for finding list of values binded to column
 function find(arr,name) {
   for(var i=0; i<arr.length; i++)
     if (arr[i].name==name) return arr[i].list;
