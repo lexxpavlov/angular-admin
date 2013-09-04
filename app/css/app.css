@@ -38,12 +38,12 @@
 #table-tools .paginator-page {text-align: right; width: 60px;}
 #table-wrapper thead th {
 	padding-left: 20px;
-	background-image: url(/pic/sort-def.gif);
+	background-image: url(../pic/sort-def.gif);
 	background-repeat: no-repeat;
 	background-position: center left;
 }
-#table-wrapper thead th.sort-asc {background-image: url(/pic/sort-asc.gif);}
-#table-wrapper thead th.sort-desc {background-image: url(/pic/sort-desc.gif);}
+#table-wrapper thead th.sort-asc {background-image: url(../pic/sort-asc.gif);}
+#table-wrapper thead th.sort-desc {background-image: url(../pic/sort-desc.gif);}
 
 #table-wrapper .table tbody tr.selected:hover td,
 #table-wrapper .table tbody tr.selected:hover th {background: #e4f7ec;}
